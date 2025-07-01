@@ -19,9 +19,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { signIn } from "@/lib/auth-client";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const formSchema = z.object({
 	email: z.string().email(),
@@ -48,11 +50,33 @@ export const SignInView = () => {
 			{
 				email: data.email,
 				password: data.password,
+				callbackURL: "/",
 			},
 			{
 				onSuccess: () => {
 					setPending(false);
 					router.push("/");
+				},
+				onError: ({ error }) => {
+					setPending(false);
+					setError(error.message);
+				},
+			}
+		);
+	};
+
+	const onSocial = (provider: "github" | "google") => {
+		setError(null);
+		setPending(true);
+
+		signIn.social(
+			{
+				provider,
+				callbackURL: "/",
+			},
+			{
+				onSuccess: () => {
+					setPending(false);
 				},
 				onError: ({ error }) => {
 					setPending(false);
@@ -133,19 +157,21 @@ export const SignInView = () => {
 								<div className="grid grid-cols-2 gap-4">
 									<Button
 										disabled={pending}
+										onClick={() => onSocial("google")}
 										variant="outline"
 										type="button"
 										className="w-full"
 									>
-										Google
+										<FaGoogle />
 									</Button>
 									<Button
 										disabled={pending}
+										onClick={() => onSocial("github")}
 										variant="outline"
 										type="button"
 										className="w-full"
 									>
-										GitHub
+										<FaGithub />
 									</Button>
 								</div>
 								<div className="text-center text-sm">
@@ -162,7 +188,7 @@ export const SignInView = () => {
 					</Form>
 
 					<div className="bg-radial from-green-700 to-green-900 relative hidden md:flex flex-col gap-y-4 items-center justify-center">
-						<img src="logo.svg" alt="Image" className="w-[92px] h-[92px]" />
+						<Image src="logo.svg" alt="Image" width={92} height={92} />
 						<p className="text-2xl font-semibold text-white">Meet.AI</p>
 					</div>
 				</CardContent>
