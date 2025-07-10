@@ -5,7 +5,6 @@ import {
 	BreadcrumbList,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -13,7 +12,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-	ChevronDownIcon,
+	ChevronRightIcon,
 	MoreVerticalIcon,
 	PencilIcon,
 	TrashIcon,
@@ -42,7 +41,7 @@ export const AgentIdViewHeader = ({
 						</BreadcrumbLink>
 					</BreadcrumbItem>
 					<BreadcrumbSeparator className="text-foreground text-xl font-medium [&>svg]:size-4">
-						<ChevronDownIcon />
+						<ChevronRightIcon />
 					</BreadcrumbSeparator>
 					<BreadcrumbItem>
 						<BreadcrumbLink
@@ -56,9 +55,7 @@ export const AgentIdViewHeader = ({
 			</Breadcrumb>
 			<DropdownMenu modal={false}>
 				<DropdownMenuTrigger>
-					<Button variant="ghost">
-						<MoreVerticalIcon />
-					</Button>
+					<MoreVerticalIcon />
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end">
 					<DropdownMenuItem onClick={onEdit}>
